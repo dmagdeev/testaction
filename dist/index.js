@@ -20,19 +20,19 @@ async function run() {
         const octokit = github.getOctokit(myToken)
         const context = github.context;
 
-    //     const {repository} = await octokit.graphql(`
-    // {
-    //   repository(owner: "${context.repo.owner}", name: "${context.repo.repo}") {
-    //     issues(last: 3) {
-    //       edges {
-    //         node {
-    //           title
-    //         }
-    //       }
-    //     }
-    //   }
-    // }`);
-    //     console.log(repository);
+        const {repository} = await octokit.graphql(`
+    {
+      repository(owner: "${context.repo.owner}", name: "${context.repo.repo}") {
+        issues(last: 3) {
+          edges {
+            node {
+              title
+            }
+          }
+        }
+      }
+    }`);
+        console.log(repository);
 
         core.debug((new Date()).toTimeString()); // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
         await wait(parseInt(ms));
