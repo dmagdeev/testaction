@@ -15,7 +15,7 @@ async function run() {
 
         const {repository} = await octokit.graphql(`
     {
-      repository(owner: ${context.repo.owner}, name: ${context.repo.repo}) {
+      repository(owner: "${context.repo.owner}", name: "${context.repo.repo}") {
         issues(last: 3) {
           edges {
             node {
