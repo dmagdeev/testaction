@@ -8,6 +8,18 @@ async function run() {
   try {
     const ms = core.getInput('milliseconds');
     core.info(`Waiting ${ms} milliseconds ...`);
+    
+    const myToken = core.getInput('myToken');
+    const octokit = github.getOctokit(myToken)
+
+    const context = github.context;
+
+    const newIssue = await octokit.issues.create({
+      ...context.repo,
+      title: 'New issue!',
+      body: 'Hello Universe!'
+    });
+    
     const payload = JSON.stringify(github.context.payload, undefined, 2)
     console.log(`The event payload: ${payload}`);
 
