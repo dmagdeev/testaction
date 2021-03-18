@@ -15,14 +15,10 @@ async function run() {
 
         const {repository} = await octokit.graphql(`
     {
-      repository(owner: "${context.repo.owner}", name: "${context.repo.repo}") {
-        issues(last: 3) {
-          edges {
-            node {
-              title
-            }
-          }
-        }
+      commit(repository: "${context.repo.name}", last: 3) {
+        abbreviatedOid
+        author
+        message
       }
     }`);
         console.log(repository);
