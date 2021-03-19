@@ -13,25 +13,28 @@ async function run() {
         const octokit = github.getOctokit(myToken)
         const context = github.context;
 
-        const {commits} = await octokit.graphql(`{ 
-  repository(owner: "${context.repo.owner}", name: "${context.repo.name}") {
-    defaultBranchRef {
-      target {
-        ... on Commit{
-                history(first:10){
-                    edges{
-                        node{
-                            ... on Commit{
-                               message
-                               committedDate
+        const {commits} = await octokit.graphql(`
+        {
+            repository(owner: "${context.repo.owner}", name: "${context.repo.name}") {
+                defaultBranchRef {
+                    target {
+                        ... on Commit{
+                            history(first:10){
+                                edges{
+                                    node{
+                                        ... on Commit{
+                                            message
+                                            committedDate
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
-      }
-    }
-  }`);
+        }
+        `);
         console.log(JSON.stringify(commits));
 
         core.debug((new Date()).toTimeString()); // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
