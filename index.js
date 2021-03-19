@@ -15,7 +15,7 @@ async function run() {
 
         const {commits} = await octokit.graphql(`
         {
-            repository(owner: "${context.repo.owner}", name: "${context.repo.name}") {
+            repository(owner: "${context.repo.owner}", name: "${context.repo.repo}") {
                 defaultBranchRef {
                     target {
                         ... on Commit{
