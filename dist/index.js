@@ -20,7 +20,7 @@ async function run() {
         const octokit = github.getOctokit(myToken)
         const context = github.context;
 
-        const {commits} = await octokit.graphql(`
+        const result = await octokit.graphql(`
         {
             repository(owner: "${context.repo.owner}", name: "${context.repo.repo}") {
                 defaultBranchRef {
@@ -42,7 +42,7 @@ async function run() {
             }
         }
         `);
-        console.log(JSON.stringify(commits));
+        console.log(JSON.stringify(result));
 
         core.debug((new Date()).toTimeString()); // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
         await wait(parseInt(ms));
